@@ -3,171 +3,514 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberSec Lab - База знаний</title>
+    <title>CyberSec Lab - База знаний по информационной безопасности</title>
     <style>
-        /* Весь твой CSS остаётся */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #64748b;
+            --success: #10b981;
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-light: #64748b;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text);
             line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
         header {
-            background: #fff;
-            border-bottom: 3px solid #2563eb;
-            padding: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 16px 0;
         }
 
         .logo {
             font-size: 24px;
-            font-weight: 600;
-            color: #2563eb;
+            font-weight: 700;
+            color: var(--primary);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
         }
 
         nav a {
-            color: #666;
+            color: var(--text-light);
             text-decoration: none;
-            margin-left: 30px;
-            transition: color 0.3s;
             font-weight: 500;
+            transition: color 0.2s;
         }
 
         nav a:hover {
-            color: #2563eb;
+            color: var(--primary);
         }
 
         .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0 60px;
             text-align: center;
-            padding: 60px 20px 40px;
-            background: #fff;
-            margin-bottom: 40px;
         }
 
         .hero h1 {
-            font-size: 42px;
-            color: #1e293b;
-            margin-bottom: 15px;
-            font-weight: 700;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
         }
 
         .hero p {
-            font-size: 18px;
-            color: #64748b;
+            font-size: 20px;
+            opacity: 0.95;
+            margin-bottom: 32px;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            padding: 0 0 60px;
+        .search-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
         }
 
-        .card {
-            background: #fff;
-            border: 1px solid #e2e8f0;
+        .search-box {
+            width: 100%;
+            padding: 16px 48px 16px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+        }
+
+        .search-results {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
             border-radius: 8px;
-            padding: 30px;
-            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            margin-top: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 50;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
             text-decoration: none;
             display: block;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            color: var(--text);
         }
 
-        .card:hover {
-            border-color: #2563eb;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
-            transform: translateY(-2px);
+        .search-result-item:hover {
+            background: var(--bg-secondary);
         }
 
-        .card-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .card h2 {
-            color: #1e293b;
-            margin-bottom: 10px;
-            font-size: 22px;
+        .search-result-title {
             font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .card p {
-            color: #64748b;
+        .search-result-category {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .stats-bar {
+            background: var(--bg);
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
             font-size: 14px;
-            margin-bottom: 15px;
+            color: var(--text-light);
+            margin-top: 4px;
         }
 
-        .card-footer {
+        /* Featured Articles Carousel */
+        .featured-section {
+            padding: 48px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .carousel-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .carousel-wrapper {
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 24px;
+            transition: transform 0.5s ease;
+        }
+
+        .featured-card {
+            min-width: calc(33.333% - 16px);
+            background: var(--bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .featured-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            position: relative;
+        }
+
+        .featured-category {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .featured-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .featured-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .featured-excerpt {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .featured-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid #f1f5f9;
-            margin-top: 10px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
         }
 
-        .article-count {
-            background: #eff6ff;
-            color: #2563eb;
-            padding: 4px 12px;
-            border-radius: 12px;
+        .featured-date {
+            color: var(--text-light);
             font-size: 13px;
+        }
+
+        .featured-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 4px 8px;
+            background: var(--bg-secondary);
+            color: var(--text-light);
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            padding: 0 -50px;
+        }
+
+        .carousel-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+            pointer-events: all;
+            color: var(--text);
+        }
+
+        .carousel-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .carousel-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: var(--primary);
+            width: 28px;
+            border-radius: 5px;
+        }
+
+        /* Categories Section */
+        .categories-section {
+            padding: 48px 0;
+            background: var(--bg);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .category-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+            background: var(--bg);
+        }
+
+        .category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .category-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .category-description {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .category-count {
+            font-size: 13px;
+            color: var(--primary);
             font-weight: 600;
         }
 
-        .view-link {
-            color: #2563eb;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
         footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #94a3b8;
-            background: #fff;
-            border-top: 1px solid #e2e8f0;
-            margin-top: 40px;
+            background: var(--text);
+            color: var(--bg-secondary);
+            padding: 48px 0 24px;
+            margin-top: 64px;
         }
 
-        footer a {
-            color: #2563eb;
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .footer-section h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-links a {
+            color: var(--bg-secondary);
             text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
         }
 
-        footer a:hover {
-            text-decoration: underline;
+        .footer-links a:hover {
+            opacity: 1;
+            color: white;
         }
 
-        @media (max-width: 768px) {
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.6;
+            font-size: 14px;
+        }
+
+        @media (max-width: 968px) {
             .hero h1 {
-                font-size: 32px;
+                font-size: 36px;
             }
-            
-            .grid {
-                grid-template-columns: 1fr;
+
+            .featured-card {
+                min-width: calc(50% - 12px);
+            }
+
+            .stats {
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .featured-card {
+                min-width: 100%;
+            }
+
+            .carousel-controls {
+                padding: 0 8px;
+            }
+
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
             }
         }
     </style>
@@ -176,9 +519,13 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="index.html" class="logo">CyberSec Lab</a>
+                <a href="index.html" class="logo">
+                    <span>🔐</span>
+                    <span>CyberSec Lab</span>
+                </a>
                 <nav>
-                    <a href="index.html">Главная</a>
+                    <a href="#featured">Статьи</a>
+                    <a href="#categories">Категории</a>
                     <a href="https://github.com/yourusername" target="_blank">GitHub</a>
                 </nav>
             </div>
@@ -187,90 +534,355 @@
 
     <section class="hero">
         <div class="container">
-            <h1>База знаний</h1>
-            <p>Практические материалы по администрированию и информационной безопасности</p>
+            <h1>База знаний по кибербезопасности</h1>
+            <p>Практические руководства, туториалы и writeup'ы для специалистов по информационной безопасности</p>
+            
+            <div class="search-wrapper">
+                <input type="text" class="search-box" id="searchInput" placeholder="Поиск по статьям, категориям, тегам...">
+                <span class="search-icon">🔍</span>
+                <div class="search-results" id="searchResults"></div>
+            </div>
         </div>
     </section>
 
-    <div class="container">
-        <section class="grid">
-            <a href="networks/index.html" class="card" data-category="networks">
-                <span class="card-icon">🌐</span>
-                <h2>Сети</h2>
-                <p>Настройка сетевого оборудования, протоколы, маршрутизация, VPN</p>
-                <div class="card-footer">
-                    <span class="article-count">2 статьи</span>
-                    <span class="view-link">Просмотреть →</span>
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalArticles">0</div>
+                    <div class="stat-label">Статей</div>
                 </div>
-            </a>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCategories">0</div>
+                    <div class="stat-label">Категорий</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalTags">0</div>
+                    <div class="stat-label">Тегов</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <a href="admin/index.html" class="card" data-category="admin">
-                <span class="card-icon">⚙️</span>
-                <h2>Администрирование</h2>
-                <p>Управление серверами, виртуализация, автоматизация задач</p>
-                <div class="card-footer">
-                    <span class="article-count">1 статья</span>
-                    <span class="view-link">Просмотреть →</span>
-                </div>
-            </a>
+    <section class="featured-section" id="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">📰 Последние публикации</h2>
+                <p class="section-subtitle">Самые свежие материалы по информационной безопасности</p>
+            </div>
 
-            <a href="linux/index.html" class="card" data-category="linux">
-                <span class="card-icon">🐧</span>
-                <h2>Linux</h2>
-                <p>Командная строка, bash-скрипты, настройка и оптимизация систем</p>
-                <div class="card-footer">
-                    <span class="article-count">1 статья</span>
-                    <span class="view-link">Просмотреть →</span>
+            <div class="carousel-container">
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="carouselTrack"></div>
                 </div>
-            </a>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="prevBtn">←</button>
+                    <button class="carousel-btn" id="nextBtn">→</button>
+                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+        </div>
+    </section>
 
-            <a href="windows/index.html" class="card" data-category="windows">
-                <span class="card-icon">🪟</span>
-                <h2>Windows</h2>
-                <p>Active Directory, PowerShell, групповые политики, управление доменом</p>
-                <div class="card-footer">
-                    <span class="article-count">1 статья</span>
-                    <span class="view-link">Просмотреть →</span>
-                </div>
-            </a>
-
-            <a href="soc/index.html" class="card" data-category="soc">
-                <span class="card-icon">🛡️</span>
-                <h2>SOC</h2>
-                <p>Мониторинг безопасности, анализ логов, SIEM-системы, инциденты</p>
-                <div class="card-footer">
-                    <span class="article-count">1 статья</span>
-                    <span class="view-link">Просмотреть →</span>
-                </div>
-            </a>
-
-            <a href="pentest/index.html" class="card" data-category="pentest">
-                <span class="card-icon">🔍</span>
-                <h2>Penetration Testing</h2>
-                <p>Тестирование на проникновение, инструменты, методология</p>
-                <div class="card-footer">
-                    <span class="article-count">1 статья</span>
-                    <span class="view-link">Просмотреть →</span>
-                </div>
-            </a>
-
-            <a href="htb/index.html" class="card" data-category="htb">
-                <span class="card-icon">🎯</span>
-                <h2>HackTheBox / TryHackMe</h2>
-                <p>Подробные разборы машин и челленджей с практических платформ</p>
-                <div class="card-footer">
-                    <span class="article-count">1 статья</span>
-                    <span class="view-link">Просмотреть →</span>
-                </div>
-            </a>
-        </section>
-    </div>
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">📂 Все категории</h2>
+                <p class="section-subtitle">Выберите интересующую вас тему</p>
+            </div>
+            <div class="categories-grid" id="categoriesGrid"></div>
+        </div>
+    </section>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 CyberSec Lab | <a href="https://github.com/yourusername" target="_blank">GitHub Repository</a></p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>О проекте</h3>
+                    <p style="opacity: 0.8; font-size: 14px; margin-top: 8px;">
+                        База знаний с практическими материалами по информационной безопасности, администрированию и пентестингу.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h3>Категории</h3>
+                    <div class="footer-links">
+                        <a href="networks/index.html">Сети</a>
+                        <a href="linux/index.html">Linux</a>
+                        <a href="windows/index.html">Windows</a>
+                        <a href="pentest/index.html">Pentest</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Ресурсы</h3>
+                    <div class="footer-links">
+                        <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                        <a href="#">RSS Feed</a>
+                        <a href="#">Telegram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CyberSec Lab. Все материалы предоставлены в образовательных целях.</p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        const articles = [
+            {
+                id: 1,
+                title: 'Настройка VLAN на Cisco Switch',
+                category: 'Сети',
+                categoryUrl: 'networks',
+                url: 'networks/vlan-cisco.html',
+                date: '2025-01-30',
+                excerpt: 'Пошаговое руководство по созданию и настройке VLAN на коммутаторах Cisco для сегментации сети',
+                tags: ['cisco', 'vlan', 'networking']
+            },
+            {
+                id: 2,
+                title: 'Автоматизация бэкапов с rsync',
+                category: 'Администрирование',
+                categoryUrl: 'admin',
+                url: 'admin/rsync-backup.html',
+                date: '2025-01-28',
+                excerpt: 'Создание автоматизированной системы резервного копирования данных с использованием rsync и cron',
+                tags: ['backup', 'rsync', 'automation']
+            },
+            {
+                id: 3,
+                title: 'Управление процессами в Linux',
+                category: 'Linux',
+                categoryUrl: 'linux',
+                url: 'linux/process-management.html',
+                date: '2025-01-26',
+                excerpt: 'Полное руководство по мониторингу, управлению и отладке процессов в Linux системах',
+                tags: ['linux', 'processes', 'systemd']
+            },
+            {
+                id: 4,
+                title: 'PowerShell: Управление пользователями AD',
+                category: 'Windows',
+                categoryUrl: 'windows',
+                url: 'windows/powershell-ad.html',
+                date: '2025-01-24',
+                excerpt: 'Автоматизация управления пользователями Active Directory с помощью PowerShell скриптов',
+                tags: ['powershell', 'active-directory', 'windows']
+            },
+            {
+                id: 5,
+                title: 'Анализ логов с grep и awk',
+                category: 'SOC',
+                categoryUrl: 'soc',
+                url: 'soc/log-analysis.html',
+                date: '2025-01-22',
+                excerpt: 'Эффективные техники поиска угроз и анализа инцидентов в логах с помощью grep, awk и других инструментов',
+                tags: ['logs', 'soc', 'grep', 'awk']
+            },
+            {
+                id: 6,
+                title: 'Разведка с помощью Nmap',
+                category: 'Pentest',
+                categoryUrl: 'pentest',
+                url: 'pentest/nmap-guide.html',
+                date: '2025-01-20',
+                excerpt: 'Комплексное руководство по использованию Nmap для разведки и сканирования сетей',
+                tags: ['nmap', 'recon', 'scanning']
+            },
+            {
+                id: 7,
+                title: '[HTB] Lame - Walkthrough',
+                category: 'HTB/THM',
+                categoryUrl: 'htb',
+                url: 'htb/lame-walkthrough.html',
+                date: '2025-01-18',
+                excerpt: 'Подробный разбор машины Lame с HackTheBox: эксплуатация Samba 3.0.20 и получение root доступа',
+                tags: ['htb', 'writeup', 'samba', 'linux']
+            }
+        ];
+
+        const categories = [
+            { name: 'Сети', icon: '🌐', url: 'networks/index.html', description: 'Настройка оборудования, протоколы, VPN', categoryUrl: 'networks' },
+            { name: 'Администрирование', icon: '⚙️', url: 'admin/index.html', description: 'Серверы, виртуализация, автоматизация', categoryUrl: 'admin' },
+            { name: 'Linux', icon: '🐧', url: 'linux/index.html', description: 'CLI, bash-скрипты, системы', categoryUrl: 'linux' },
+            { name: 'Windows', icon: '🪟', url: 'windows/index.html', description: 'AD, PowerShell, GPO', categoryUrl: 'windows' },
+            { name: 'SOC', icon: '🛡️', url: 'soc/index.html', description: 'Мониторинг, логи, SIEM', categoryUrl: 'soc' },
+            { name: 'Pentest', icon: '🔍', url: 'pentest/index.html', description: 'Тестирование на проникновение', categoryUrl: 'pentest' },
+            { name: 'HTB/THM', icon: '🎯', url: 'htb/index.html', description: 'Writeup\'ы платформ', categoryUrl: 'htb' }
+        ];
+
+        let currentSlide = 0;
+        let totalSlides = 0;
+
+        const categoryIcons = {
+            'Сети': '🌐',
+            'Администрирование': '⚙️',
+            'Linux': '🐧',
+            'Windows': '🪟',
+            'SOC': '🛡️',
+            'Pentest': '🔍',
+            'HTB/THM': '🎯'
+        };
+
+        function formatDate(dateStr) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateStr).toLocaleDateString('ru-RU', options);
+        }
+
+        function updateStats() {
+            const allTags = [...new Set(articles.flatMap(a => a.tags))];
+            document.getElementById('totalArticles').textContent = articles.length;
+            document.getElementById('totalCategories').textContent = categories.length;
+            document.getElementById('totalTags').textContent = allTags.length;
+        }
+
+        function getCategoryCount(categoryUrl) {
+            return articles.filter(a => a.categoryUrl === categoryUrl).length;
+        }
+
+        function renderCarousel() {
+            const track = document.getElementById('carouselTrack');
+            const sortedArticles = [...articles].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            totalSlides = Math.ceil(sortedArticles.length / 3);
+
+            track.innerHTML = sortedArticles.map(article => `
+                <a href="${article.url}" class="featured-card">
+                    <div class="featured-thumbnail">
+                        ${categoryIcons[article.category] || '📄'}
+                        <span class="featured-category">${article.category}</span>
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-title">${article.title}</div>
+                        <div class="featured-excerpt">${article.excerpt}</div>
+                        <div class="featured-footer">
+                            <span class="featured-date">${formatDate(article.date)}</span>
+                        </div>
+                        <div class="featured-tags" style="margin-top: 12px;">
+                            ${article.tags.slice(0, 3).map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+
+            renderDots();
+            updateCarousel();
+        }
+
+        function renderDots() {
+            const dotsContainer = document.getElementById('carouselDots');
+            dotsContainer.innerHTML = Array.from({length: totalSlides}, (_, i) => 
+                `<span class="dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></span>`
+            ).join('');
+        }
+
+        function updateCarousel() {
+            const track = document.getElementById('carouselTrack');
+            const cardWidth = track.children[0] ? track.children[0].offsetWidth : 0;
+            const gap = 24;
+            const offset = currentSlide * (cardWidth * 3 + gap * 3);
+            track.style.transform = `translateX(-${offset}px)`;
+
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide >= totalSlides - 1;
+        }
+
+        function goToSlide(index) {
+            currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
+            updateCarousel();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categoriesGrid');
+            container.innerHTML = categories.map(cat => {
+                const count = getCategoryCount(cat.categoryUrl);
+                const word = count === 1 ? 'статья' : count < 5 ? 'статьи' : 'статей';
+                return `
+                    <a href="${cat.url}" class="category-card">
+                        <span class="category-icon">${cat.icon}</span>
+                        <div class="category-name">${cat.name}</div>
+                        <div class="category-description">${cat.description}</div>
+                        <div class="category-count">${count} ${word}</div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function performSearch(query) {
+            const results = document.getElementById('searchResults');
+            const lowerQuery = query.toLowerCase();
+            
+            if (!query.trim()) {
+                results.classList.remove('active');
+                return;
+            }
+
+            const matches = articles.filter(article => 
+                article.title.toLowerCase().includes(lowerQuery) ||
+                article.category.toLowerCase().includes(lowerQuery) ||
+                article.excerpt.toLowerCase().includes(lowerQuery) ||
+                article.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+            );
+
+            if (matches.length > 0) {
+                results.innerHTML = matches.map(article => `
+                    <a href="${article.url}" class="search-result-item">
+                        <div class="search-result-title">${article.title}</div>
+                        <div class="search-result-category">${article.category} • ${formatDate(article.date)}</div>
+                    </a>
+                `).join('');
+                results.classList.add('active');
+            } else {
+                results.innerHTML = '<div class="search-result-item"><div class="search-result-title">Ничего не найдено</div></div>';
+                results.classList.add('active');
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            performSearch(e.target.value);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-wrapper')) {
+                document.getElementById('searchResults').classList.remove('active');
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', prevSlide);
+        document.getElementById('nextBtn').addEventListener('click', nextSlide);
+
+        // Auto-play carousel every 6 seconds
+        setInterval(() => {
+            if (currentSlide < totalSlides - 1) {
+                nextSlide();
+            } else {
+                goToSlide(0);
+            }
+        }, 6000);
+
+        // Update carousel on window resize
+        window.addEventListener('resize', updateCarousel);
+
+        // Initialize
+        updateStats();
+        renderCarousel();
+        renderCategories();
+    </script>
 </body>
 </html>
-EOF
