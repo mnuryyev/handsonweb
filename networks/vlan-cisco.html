@@ -9,21 +9,23 @@
 <body>
     <header>
         <div class="header-content">
-            <a href="../index.html" class="logo">CYBERSEC LAB</a>
+            <a href="../index.html" class="logo">CyberSec Lab</a>
         </div>
     </header>
 
     <div class="container">
-        <a href="index.html" class="back-link">← Назад к Сети</a>
+        <a href="index.html" class="back-link">← Назад к разделу Сети</a>
         
-        <h1>Настройка VLAN на Cisco Switch</h1>
-        <p style="color: #555;">15 января 2025</p>
+        <div class="content">
+            <h1>Настройка VLAN на Cisco Switch</h1>
+            <p style="color: #94a3b8; font-size: 14px;">15 января 2025</p>
 
-        <h2>Введение</h2>
-        <p>VLAN (Virtual Local Area Network) позволяет разделить физическую сеть на логические сегменты для улучшения безопасности и производительности.</p>
+            <h2>Введение</h2>
+            <p>VLAN (Virtual Local Area Network) позволяет разделить физическую сеть на логические сегменты для улучшения безопасности и производительности сети.</p>
 
-        <h2>Создание VLAN</h2>
-        <pre><code>Switch> enable
+            <h2>Создание VLAN</h2>
+            <p>Для создания VLAN используются следующие команды:</p>
+            <pre><code>Switch> enable
 Switch# configure terminal
 Switch(config)# vlan 10
 Switch(config-vlan)# name MANAGEMENT
@@ -33,29 +35,33 @@ Switch(config)# vlan 20
 Switch(config-vlan)# name USERS
 Switch(config-vlan)# exit</code></pre>
 
-        <h2>Назначение портов</h2>
-        <pre><code>Switch(config)# interface fastethernet 0/1
+            <h2>Назначение портов в VLAN</h2>
+            <p>После создания VLAN необходимо назначить порты:</p>
+            <pre><code>Switch(config)# interface fastethernet 0/1
 Switch(config-if)# switchport mode access
 Switch(config-if)# switchport access vlan 10
 Switch(config-if)# exit</code></pre>
 
-        <h2>Настройка Trunk</h2>
-        <pre><code>Switch(config)# interface gigabitethernet 0/1
+            <h2>Настройка Trunk порта</h2>
+            <p>Для передачи трафика нескольких VLAN между коммутаторами:</p>
+            <pre><code>Switch(config)# interface gigabitethernet 0/1
 Switch(config-if)# switchport mode trunk
 Switch(config-if)# switchport trunk allowed vlan 10,20
 Switch(config-if)# exit</code></pre>
 
-        <h2>Проверка конфигурации</h2>
-        <pre><code>Switch# show vlan brief
+            <h2>Проверка конфигурации</h2>
+            <pre><code>Switch# show vlan brief
 Switch# show interfaces trunk</code></pre>
 
-        <h2>Практические советы</h2>
-        <ul>
-            <li>Используйте VLAN 1 только для управления</li>
-            <li>Документируйте все VLAN в сети</li>
-            <li>Настройте Native VLAN отличный от 1</li>
-            <li>Регулярно проверяйте trunk порты</li>
-        </ul>
+            <h2>Практические советы</h2>
+            <ul>
+                <li>Используйте VLAN 1 только для управления коммутатором</li>
+                <li>Обязательно документируйте назначение каждого VLAN</li>
+                <li>Настройте Native VLAN отличный от VLAN 1 для повышения безопасности</li>
+                <li>Регулярно проверяйте статус trunk портов</li>
+                <li>Используйте VTP для централизованного управления VLAN в больших сетях</li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>

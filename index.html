@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberSec Lab</title>
+    <title>CyberSec Lab - База знаний</title>
     <style>
         * {
             margin: 0;
@@ -12,25 +12,23 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
             line-height: 1.6;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         header {
-            background: #111;
-            border-bottom: 1px solid #00ff00;
+            background: #fff;
+            border-bottom: 3px solid #2563eb;
             padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .header-content {
@@ -41,81 +39,135 @@
 
         .logo {
             font-size: 24px;
-            font-weight: bold;
-            color: #00ff00;
+            font-weight: 600;
+            color: #2563eb;
             text-decoration: none;
         }
 
         nav a {
-            color: #888;
+            color: #666;
             text-decoration: none;
             margin-left: 30px;
             transition: color 0.3s;
+            font-weight: 500;
         }
 
         nav a:hover {
-            color: #00ff00;
+            color: #2563eb;
         }
 
         .hero {
             text-align: center;
-            padding: 80px 20px;
+            padding: 60px 20px 40px;
+            background: #fff;
+            margin-bottom: 40px;
         }
 
         .hero h1 {
-            font-size: 48px;
-            color: #00ff00;
-            margin-bottom: 20px;
+            font-size: 42px;
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-weight: 700;
         }
 
         .hero p {
             font-size: 18px;
-            color: #888;
+            color: #64748b;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 60px 0;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            padding: 0 0 60px;
         }
 
         .card {
-            background: #111;
-            border: 1px solid #222;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
             padding: 30px;
             transition: all 0.3s;
             text-decoration: none;
             display: block;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .card:hover {
-            border-color: #00ff00;
-            transform: translateY(-5px);
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+            transform: translateY(-2px);
         }
 
         .card-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
         }
 
         .card h2 {
-            color: #00ff00;
+            color: #1e293b;
             margin-bottom: 10px;
-            font-size: 24px;
+            font-size: 22px;
+            font-weight: 600;
         }
 
         .card p {
-            color: #888;
+            color: #64748b;
             font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #f1f5f9;
+            margin-top: 10px;
+        }
+
+        .article-count {
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .view-link {
+            color: #2563eb;
+            font-size: 13px;
+            font-weight: 500;
         }
 
         footer {
             text-align: center;
             padding: 40px 20px;
-            color: #555;
-            border-top: 1px solid #222;
-            margin-top: 80px;
+            color: #94a3b8;
+            background: #fff;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -123,67 +175,100 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="index.html" class="logo">CYBERSEC LAB</a>
+                <a href="index.html" class="logo">CyberSec Lab</a>
                 <nav>
+                    <a href="index.html">Главная</a>
                     <a href="https://github.com/yourusername" target="_blank">GitHub</a>
                 </nav>
             </div>
         </div>
     </header>
 
-    <div class="container">
-        <section class="hero">
-            <h1>Knowledge Base</h1>
-            <p>Практические материалы по информационной безопасности</p>
-        </section>
+    <section class="hero">
+        <div class="container">
+            <h1>База знаний</h1>
+            <p>Практические материалы по администрированию и информационной безопасности</p>
+        </div>
+    </section>
 
+    <div class="container">
         <section class="grid">
             <a href="networks/index.html" class="card">
-                <div class="card-icon">🌐</div>
+                <span class="card-icon">🌐</span>
                 <h2>Сети</h2>
-                <p>Cisco, Routing, VPN, Protocols</p>
+                <p>Настройка сетевого оборудования, протоколы, маршрутизация, VPN</p>
+                <div class="card-footer">
+                    <span class="article-count">1 статья</span>
+                    <span class="view-link">Просмотреть →</span>
+                </div>
             </a>
 
             <a href="admin/index.html" class="card">
-                <div class="card-icon">⚙️</div>
+                <span class="card-icon">⚙️</span>
                 <h2>Администрирование</h2>
-                <p>Servers, Virtualization, Automation</p>
+                <p>Управление серверами, виртуализация, автоматизация задач</p>
+                <div class="card-footer">
+                    <span class="article-count">1 статья</span>
+                    <span class="view-link">Просмотреть →</span>
+                </div>
             </a>
 
             <a href="linux/index.html" class="card">
-                <div class="card-icon">🐧</div>
+                <span class="card-icon">🐧</span>
                 <h2>Linux</h2>
-                <p>CLI, Bash, System Configuration</p>
+                <p>Командная строка, bash-скрипты, настройка и оптимизация систем</p>
+                <div class="card-footer">
+                    <span class="article-count">1 статья</span>
+                    <span class="view-link">Просмотреть →</span>
+                </div>
             </a>
 
             <a href="windows/index.html" class="card">
-                <div class="card-icon">🪟</div>
+                <span class="card-icon">🪟</span>
                 <h2>Windows</h2>
-                <p>Active Directory, PowerShell, GPO</p>
+                <p>Active Directory, PowerShell, групповые политики, управление доменом</p>
+                <div class="card-footer">
+                    <span class="article-count">1 статья</span>
+                    <span class="view-link">Просмотреть →</span>
+                </div>
             </a>
 
             <a href="soc/index.html" class="card">
-                <div class="card-icon">🛡️</div>
+                <span class="card-icon">🛡️</span>
                 <h2>SOC</h2>
-                <p>SIEM, Log Analysis, Incidents</p>
+                <p>Мониторинг безопасности, анализ логов, SIEM-системы, инциденты</p>
+                <div class="card-footer">
+                    <span class="article-count">1 статья</span>
+                    <span class="view-link">Просмотреть →</span>
+                </div>
             </a>
 
             <a href="pentest/index.html" class="card">
-                <div class="card-icon">🔓</div>
-                <h2>Pentest</h2>
-                <p>Exploitation, Tools, Techniques</p>
+                <span class="card-icon">🔍</span>
+                <h2>Penetration Testing</h2>
+                <p>Тестирование на проникновение, инструменты, методология</p>
+                <div class="card-footer">
+                    <span class="article-count">1 статья</span>
+                    <span class="view-link">Просмотреть →</span>
+                </div>
             </a>
 
             <a href="htb/index.html" class="card">
-                <div class="card-icon">🎯</div>
-                <h2>HTB / THM</h2>
-                <p>Machine Writeups</p>
+                <span class="card-icon">🎯</span>
+                <h2>HackTheBox / TryHackMe</h2>
+                <p>Подробные разборы машин и челленджей с практических платформ</p>
+                <div class="card-footer">
+                    <span class="article-count">1 статья</span>
+                    <span class="view-link">Просмотреть →</span>
+                </div>
             </a>
         </section>
     </div>
 
     <footer>
-        <p>© 2025 CyberSec Lab</p>
+        <div class="container">
+            <p>&copy; 2025 CyberSec Lab | <a href="https://github.com/yourusername" target="_blank">GitHub Repository</a></p>
+        </div>
     </footer>
 </body>
 </html>
